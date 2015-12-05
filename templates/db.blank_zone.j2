@@ -1,0 +1,11 @@
+$TTL 10     ; 10 seconds
+@ IN SOA master.{{ DNS_ZONE }}. admin.{{ DNS_ZONE }}. (
+    1           ; serial
+    604800      ; refresh (1 week)
+    60          ; retry (5 minutes)
+    2419200     ; expire (4 weeks)
+    10          ; minimum (10 seconds)
+)
+
+master     IN A 127.0.0.1
+@          IN NS master.{{ DNS_ZONE }}.

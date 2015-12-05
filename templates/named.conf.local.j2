@@ -1,0 +1,10 @@
+include "/etc/bind/nsupdate.key";
+
+zone "{{ DNS_ZONE }}" {
+    type master;
+    file "/var/cache/bind/db.{{ DNS_ZONE }}";
+    allow-update {
+        key "{{ DNS_KEY_NAME }}";
+    };
+    check-names fail;
+};
