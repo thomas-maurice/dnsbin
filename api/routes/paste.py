@@ -53,15 +53,14 @@ class Paste(object):
         try:
             body.decode("ascii")
         except UnicodeDecodeError:
-            raise falcon.HTTPBadRequest("")
-        data = base64.b64encode(req.context['json']['data'])
+            raise falcon.HTTPBadRequest("Your data is not ascii encoded !")
 
         uid = str(uuid.uuid4())
         i = 0
-        for chunk in chunks(data, 254):
+        for chunk in chunks(body, 254):
             i += 1
             LOGGER.info("Registering chunk %d of paste %s" % (i, uid))
-            update.replace("%d.%s" % (i, uid), 10, 'TXT', chunk)
+            update.replace("%d.%s" % (i, uid), 10, 'TXT',str(chunk))
             response = dns.query.tcp(update, CONFIG.get('server', 'address'))
         LOGGER.info("Registering chunk number of paste %s" % uid)
         update.replace("%s" % uid, 10, 'TXT', "%d" % i)

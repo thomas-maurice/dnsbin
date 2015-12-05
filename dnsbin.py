@@ -69,7 +69,8 @@ def do_post(args):
 
 @cli.endpoint(
     Argument('server', metavar='ADDR', type=str, help="Server to retrieve from"),
-    Argument('paste', metavar='UUID', type=str, help="Paste to get")
+    Argument('paste', metavar='UUID', type=str, help="Paste to get"),
+    Argument('--decode', action='store_true', help="Do we have to decode the value ?")
 )
 def do_get(args):
     resolver = dns.resolver.Resolver()
@@ -87,7 +88,10 @@ def do_get(args):
         for chunk in answer:
             data += str(chunk)
     print "Your paste :\n"
-    print data
+    if args.decode:
+        print base64.b64decode(data)
+    else:
+        print data
 
 args = cli.parser.parse_args()
 args.func(args)

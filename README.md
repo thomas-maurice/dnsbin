@@ -47,6 +47,9 @@ pip install requests dnspython clifactory
 87597b44-d913-4740-9091-d9bd62b8f422
 ```
 
+Note that if the file is not ascii only, it will be encoded
+before being uploaded.
+
 Done ! Your paste has id `87597b44-d913-4740-9091-d9bd62b8f422`
 
 ## Getting a paste
@@ -101,8 +104,6 @@ That is almost as stupid as simple :)
  * Add a pastes.paste endpoint listing all the pastes
  * Add a mechanism to purge old pastes
  * Add a way to parallelize upload
- * Accept only ASCII data posts, so that the encoding is
-   deported client side
  * Support to chunk big content into multiple pastes and store
    the references of this pastes in the "master paste"
  * Add some metadata to the pastes somehow
