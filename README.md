@@ -78,3 +78,7 @@ That is almost as stupid as simple :)
 # TODO
  * Support "fqdn pastes", that will allow you to
    query Google's own 8.8.8.8 for *someuuid*.yourdomain.com :)
+ * DNSSEC \o/
+ * Add a pastes.paste endpoint listing all the pastes
+ * Add a mechanism to purge old pastes
+ * Add a way to parallelize upload
