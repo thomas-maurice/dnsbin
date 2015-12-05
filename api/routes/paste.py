@@ -50,6 +50,10 @@ class Paste(object):
 
         body = req.context['json']['data']
         LOGGER.info("Received %d byte long paste" % len(body))
+        try:
+            body.decode("ascii")
+        except UnicodeDecodeError:
+            raise falcon.HTTPBadRequest("")
         data = base64.b64encode(req.context['json']['data'])
 
         uid = str(uuid.uuid4())

@@ -6,17 +6,32 @@ dnsbin is a pastebin based on DNS. It means that you
 can submit a paste using a basic HTTP api, and
 retrieving it via DNS requests.
 
+## What's the concept ?
+The concept is quite simple, it uses the DNS protocol (and more especially the TXT
+data field) to store any arbitrary data. This is silly but also interesting since
+DNS has to be the less filtered protocol ever (unless you live in China, lol) and
+benefits from la native caching system. 
+
+That means you virtually have a free CDN :) (Eventough this functionnality has not
+been developped yet, see TODO)
+
+It has initially be developped to be some kind of under-optimized pastebin system but since
+you can store any ASCII data in TXT fields, you can upload base64 encoded binary files
+if you want. Bittorrent is dead :D
+
+(or not.)
+
 ## Why would you do that ?
 Because I could :3
 
 # How to install it ?
 Just build the Dockerfile :
 ```bash
-    docker build -t dnsbin .
+docker build -t dnsbin .
 ```
 And run it :
 ```bash
-    ./start_dnsbin.sh
+./start_dnsbin.sh
 ```
 
 And you're done !
@@ -24,11 +39,11 @@ And you're done !
 # Using the commandline
 To use the command line you need to install few packages using pip :
 ```bash
-    pip install requests dnspython clifactory
+pip install requests dnspython clifactory
 ```
 ## Posting a file
 ```bash
-    ./dnsbin.py post someserver.tld file_name
+./dnsbin.py post someserver.tld file_name
 87597b44-d913-4740-9091-d9bd62b8f422
 ```
 
@@ -36,7 +51,7 @@ Done ! Your paste has id `87597b44-d913-4740-9091-d9bd62b8f422`
 
 ## Getting a paste
 ```bash
-    ./dnsbin.py get someserver.tld 87597b44-d913-4740-9091-d9bd62b8f422
+./dnsbin.py get someserver.tld 87597b44-d913-4740-9091-d9bd62b8f422
 Paste is 15 chunks long
  * Getting 1.87597b44-d913-4740-9091-d9bd62b8f422 chunk
  * Getting 2.87597b44-d913-4740-9091-d9bd62b8f422 chunk
@@ -60,9 +75,13 @@ dnssec-keygen -a HMAC-SHA512 -b 512 -r /dev/urandom -n HOST keyname
 
 If you don't, anyone could push updates to your zone.
 
-# How does it work ?
+# How does it work under the hood ?
 The bind DNS server registers a "local" zone .paste that
 he thinks he is rightful to authoritate on.
+
+I don't quite think that in the current implementation
+fqdn chunks are supported, but let me know if you find
+a way to do it, I'll try to implement it sometime !
 
 The HTTP API uses TSIG keys to post update to the zone
 everytime you want to get a paste. The paste is encoded
@@ -82,3 +101,8 @@ That is almost as stupid as simple :)
  * Add a pastes.paste endpoint listing all the pastes
  * Add a mechanism to purge old pastes
  * Add a way to parallelize upload
+ * Accept only ASCII data posts, so that the encoding is
+   deported client side
+ * Support to chunk big content into multiple pastes and store
+   the references of this pastes in the "master paste"
+ * Add some metadata to the pastes somehow

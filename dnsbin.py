@@ -59,6 +59,11 @@ def do_post(args):
     f = open(args.file, 'r')
     data = f.read()
     f.close()
+    try:
+        data.decode('ascii')
+    except UnicodeDecodeError:
+        print "Data is not ASCII, encoding it into base 64"
+        data = base64.b64encode(data)
     resp = requests.post("http://%s/paste" % args.server, json={"data": data})
     print resp.json()['data']['paste']
 
@@ -72,6 +77,7 @@ def do_get(args):
     answer = resolver.query("%s.paste" % args.paste, 'TXT')
     size = 0
     for data in answer:
+        print data
         size = int(str(data).replace("\"", ""))
     print "Paste is %d chunks long" % size
     data = ""
@@ -81,7 +87,7 @@ def do_get(args):
         for chunk in answer:
             data += str(chunk)
     print "Your paste :\n"
-    print base64.b64decode(data)
+    print data
 
 args = cli.parser.parse_args()
 args.func(args)
