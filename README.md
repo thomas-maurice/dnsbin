@@ -1,4 +1,6 @@
 # dnsbin
+[![Build Status](https://travis-ci.org/thomas-maurice/dnsbin.svg)](https://travis-ci.org/thomas-maurice/dnsbin)
+
 The most useless and under optimized pastebin ever known to mankind.
 
 # Introduction
@@ -10,7 +12,7 @@ retrieving it via DNS requests.
 The concept is quite simple, it uses the DNS protocol (and more especially the TXT
 data field) to store any arbitrary data. This is silly but also interesting since
 DNS has to be the less filtered protocol ever (unless you live in China, lol) and
-benefits from la native caching system. 
+benefits from la native caching system.
 
 That means you virtually have a free CDN :) (Eventough this functionnality has not
 been developped yet, see TODO)
