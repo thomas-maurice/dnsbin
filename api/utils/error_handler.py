@@ -24,7 +24,7 @@ import json
 import traceback
 
 def error_handler(exce, req, resp, params):
-    if isinstance(exce, falcon.HTTPError):
+    if issubclass(exce.__class__, falcon.HTTPError):
         resp.status = exce.status
         req.context['result'] = {'error': "%s: %s" % (exce.title, exce.description)}
     else:
