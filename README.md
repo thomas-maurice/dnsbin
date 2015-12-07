@@ -1,5 +1,6 @@
 # dnsbin
 [![Build Status](https://travis-ci.org/thomas-maurice/dnsbin.svg)](https://travis-ci.org/thomas-maurice/dnsbin)
+[![Docker Pulls](https://img.shields.io/docker/pulls/tmaurice/dnsbin.svg)](https://hub.docker.com/r/tmaurice/dnsbin/)
 
 The most useless and under optimized pastebin ever known to mankind.
 
@@ -14,7 +15,7 @@ data field) to store any arbitrary data. This is silly but also interesting sinc
 DNS has to be the less filtered protocol ever (unless you live in China, lol) and
 benefits from la native caching system.
 
-That means you virtually have a free CDN :) (Eventough this functionnality has not
+That means you virtually have a free CDN :) (Eventough this functionality has not
 been developped yet, see TODO)
 
 It has initially be developped to be some kind of under-optimized pastebin system but since
@@ -31,6 +32,9 @@ Just build the Dockerfile :
 ```bash
 docker build -t dnsbin .
 ```
+
+*Alternatively* you can now just perform a docker pull tmaurice/dnsbin
+
 And run it :
 ```bash
 ./start_dnsbin.sh
@@ -39,35 +43,7 @@ And run it :
 And you're done !
 
 # Using the commandline
-To use the command line you need to install few packages using pip :
-```bash
-pip install requests dnspython clifactory
-```
-## Posting a file
-```bash
-./dnsbin.py post someserver.tld file_name
-87597b44-d913-4740-9091-d9bd62b8f422
-```
-
-Note that if the file is not ascii only, it will be encoded
-before being uploaded.
-
-Done ! Your paste has id `87597b44-d913-4740-9091-d9bd62b8f422`
-
-## Getting a paste
-```bash
-./dnsbin.py get someserver.tld 87597b44-d913-4740-9091-d9bd62b8f422
-Paste is 15 chunks long
- * Getting 1.87597b44-d913-4740-9091-d9bd62b8f422 chunk
- * Getting 2.87597b44-d913-4740-9091-d9bd62b8f422 chunk
-  ... Some more chunks ...
- * Getting 14.87597b44-d913-4740-9091-d9bd62b8f422 chunk
- * Getting 15.87597b44-d913-4740-9091-d9bd62b8f422 chunk
-Your paste :
- ... The text you did paste ! ...
-```
-
-That was easy :)
+To use the commandline please refer to the documentation there : https://github.com/thomas-maurice/dnsbin-cli
 
 # Customizing it
 You can customize the docker setting up some parameters in the startup script.
